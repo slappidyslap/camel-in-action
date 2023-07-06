@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'kg.musabaev'
@@ -9,9 +10,20 @@ repositories {
     mavenCentral()
 }
 
+application {
+    mainClass = 'kg.musabaev.Starter'
+}
+
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
+    implementation platform('org.apache.camel:camel-bom:3.21.0')
+
+    implementation 'org.apache.camel:camel-core'
+
     testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation 'ch.qos.logback:logback-classic:1.4.8'
+    implementation 'org.slf4j:slf4j-api:2.0.7'
 }
 
 test {
