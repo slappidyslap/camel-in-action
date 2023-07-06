@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'com.avast.gradle.docker-compose' version '0.16.12'
 }
 
 group = 'kg.musabaev'
@@ -19,11 +20,32 @@ dependencies {
     implementation platform('org.apache.camel:camel-bom:3.21.0')
 
     implementation 'org.apache.camel:camel-core'
+    implementation 'org.apache.camel:camel-rabbitmq'
+
+    implementation 'com.google.guava:guava:32.1.0-jre'
+    implementation 'com.rabbitmq:amqp-client:5.18.0'
 
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
     implementation 'ch.qos.logback:logback-classic:1.4.8'
     implementation 'org.slf4j:slf4j-api:2.0.7'
+}
+
+dockerCompose {
+    rabbitMqOnly {
+        useComposeFiles = ['docker-compose-rabbitmq.yml']
+        environment.put 'RABBITMQ_USERNAME', '1'
+        environment.put 'RABBITMQ_PASSWORD', '1'
+        captureContainersOutput = project.hasProperty("captureOutput")
+    }
+}
+
+*tasks.each {
+    if (it.name.endsWith("ComposeUp"))
+        tasks.run.dependsOn it
+    else if (it.name.endsWith("ComposeBuild")) {
+        tasks.assemble.dependsOn it
+    }
 }
 
 test {
