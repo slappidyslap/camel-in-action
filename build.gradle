@@ -12,7 +12,7 @@ repositories {
 }
 
 application {
-    mainClass = 'kg.musabaev.Starter'
+    mainClass = 'kg.musabaev.CamelInActionApplication'
 }
 
 dependencies {
@@ -20,6 +20,7 @@ dependencies {
     implementation platform('org.apache.camel:camel-bom:3.21.0')
 
     implementation 'org.apache.camel:camel-core'
+    implementation 'org.apache.camel:camel-main'
     implementation 'org.apache.camel:camel-rabbitmq'
 
     implementation 'com.google.guava:guava:32.1.0-jre'
